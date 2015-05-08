@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -57,54 +58,47 @@
                             Input License Information
                         </div>
                         <div class="panel-body">
-	                        <form role="form">	
+	                        <sf:form method="POST" modelAttribute="licenseCreationForm">	
 	                        	<div class="row">
 		                        	<div class="col-lg-6">
 		                        		<div class="form-group">
-		                        			<label>License Name:</label>
-		                        			<select name="licName" id="sltName" class="form-control">
-		                        				<option>1</option>
-		                        				<option>1</option>
-		                        				<option>1</option>
-		                        				<option>1</option>
-		                        			</select>
-		                        			<p class="help-block">Or else...</p>
-		                        			<input type="text" name="licName" id="txtName" class="form-control" placeholder="Enter license name here.">	                        			
+		                        			<label>License Name:</label>		                        			
+		                        			<sf:input path="licenseName" type="text" id="txtName" class="form-control" placeholder="Enter license name here." required="true"/>	                        			
 		                        		</div>
 		                        		<div class="form-group">
 		                        			<label for="licKey">License Key:</label>
-		                        			<input id="licKey" name="licKey" type="text" class="form-control">	                        			
+		                        			<sf:input path="licenseKey" id="licKey" type="text" class="form-control"/>	                        			
 		                        		</div>
 		                        		<div class="form-group">
 		                        			<label for="licType">License Type:</label>
 		                        			<div class="radio">
 		                        				<label>
-		                        					<input type="radio" name="licType" value="OS">
+		                        					<sf:radiobutton path="licenseType" value="OS" required="true"/>
 		                        					OS
 		                        				</label>
 		                        				<label>
-		                        					<input type="radio" name="licType" value="Application">
-		                        					Application
+		                        					<sf:radiobutton path="licenseType" value="App"/>
+		                        				    App
 		                        				</label>
 		                        			</div>
 		                        		</div>
 		                        		<div class="form-group">
 		                        			<label for="licSite">From Site:</label>
-		                        			<select name="licSite" class="form-control">
-		                        				<option>Wuxi</option>
-		                        				<option>Suzhou</option>
-		                        				<option>...</option>
-		                        			</select>	                        			
+		                        			<sf:select path="fromSite" class="form-control">
+		                        				<sf:option value="Wuxi" />
+		                        				<sf:option value="Suzhou" />
+		                        				<sf:option value="..." />
+		                        			</sf:select>	                        			
 		                        		</div>
 		                        		<div class="form-group">
 		                        			<label for="quantity">Quantity:</label>
-		                        			<input id="quantity" name="quantity" type="text" class="form-control">	                        			
+		                        			<sf:input path="quantity" id="quantity" type="number" min="1" class="form-control" required="true"/>	                        			
 		                        		</div>	                        		
 		                        		<div class="form-group">
 		                        			<label for="price">Price:</label>
 		                        			<div class="form-group input-group">
 			                        			<span class="input-group-addon">$</span>
-			                        			<input id="price" type="text" name="price" class="form-control">
+			                        			<sf:input path="totalPrice" id="price" type="number" step="any" min="1" class="form-control"/>
 			                        		</div>	                        			
 		                        		</div>
 		                        		
@@ -113,16 +107,12 @@
 	                        			<div class="form-group">
 		                        			<label for="expDate">Expire Date:</label>
 							                <div class='input-group date' id='expDate'>
-							                    <input type='text' class="form-control" />
+							                    <sf:input path="expireDate" type='text' class="form-control" />
 							                    <span class="input-group-addon">
 							                        <span class="fa fa-calendar"></span>
 							                    </span>
 							                </div>
-		                        		</div>
-		                        		<div class="form-group">
-		                        			<label for="creator">Creator Name:</label>
-		                        			<input id="creator" type="text" name="creator" class="form-control" placeholder="Such as: Lian ZhengJun">
-		                        		</div>
+		                        		</div>		                        		
 	                        		</div>
 	                        	</div>
 	                        	<div class="row">
@@ -131,7 +121,7 @@
 		                        		<button type="reset" class="btn btn-default">Reset Button</button>
 		                        	</div>
 	                        	</div>
-	                        </form>
+	                        </sf:form>
                         </div>
                     </div>
 				</div>
@@ -157,12 +147,12 @@
     
     <!-- Custom Theme JavaScript -->
     <script src="<c:url value="/resources/dist/js/sb-admin-2.js"/>"></script>
-    
+        
     <!-- Initial Datetimepicker -->
     <script type="text/javascript">
 	    jQuery(function () {
 	        jQuery('#expDate').datetimepicker({
-	        	format:'MMM/DD/YYYY'	
+	        	format:'YYYY-MM-DD'	
 	    	});
 	    });
     </script>

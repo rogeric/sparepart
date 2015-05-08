@@ -44,10 +44,10 @@
                                     		<a href="#">License Overview</a>
                                     	</li>	
                                     	<li>
-                                    		<a href="#">Create License</a>
+                                    		<a href="/sparepart/license?new">Create License</a>
                                     	</li>
                                     	<li>
-                                    		<a href="#">Edit License</a>
+                                    		<a href="/sparepart/license/records">Edit License</a>
                                     	</li>
                                     	<li>
                                     		<a href="#">Apply License</a>

@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"/>" >
 
 	<!-- DataTables Responsive CSS -->
-    <link rel="stylesheet" href="<c:url value="resources/bower_components/datatables-responsive/css/dataTables.responsive.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/bower_components/datatables-responsive/css/dataTables.responsive.css"/>">
         
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/dist/css/sb-admin-2.css"/>">
@@ -54,30 +54,51 @@
             	<div class="col-lg-12">
             		<div class="panel panel-default">
                         <div class="panel-heading">
-                            Choose 1 entry to edit or delete
+                            These are licenses existed in database. Select to delete.
                         </div>
                         <div class="panel-body">
                         	<div class="dataTable_wrapper">
                         		<table class="table table-striped table-bordered table-hover" id="dataTables">
                         			<thead>
                         				<tr>
-                        					<th>Inventory ID</th>
+                        					<th>ID</th>
                         					<th>License Name</th>
                         					<th>License Key</th>
                         					<th>License Type</th>
-                        					<th>Total Quantity</th>
-                        					<th>Spare Quantity</th>
+                        					<th>From Site</th>
+                        					<th>Quantity</th>
+                        					<th>Total Price</th>
+                        					<th>Expire Date</th>
+                        					<th>Registered By (GID)</th>
+                        					<th>Registered By (Name)</th>
+                        					<th>Register Time</th>
                         				</tr>
                         			</thead>
+                        			<tbody>
+                        				<c:forEach var="loe" items="${loeList}">
+                        					<tr>
+                        					<td>${loe.invOpId }</td>
+                        					<td>${loe.licenseName }</td>
+                        					<td>${loe.licenseKey }</td>
+                        					<td>${loe.licenseType }</td>
+                        					<td>${loe.fromSite }</td>
+                        					<td>${loe.quantity }</td>
+                        					<td>${loe.totalPrice }</td>
+                        					<td>${loe.expireDate }</td>
+                        					<td>${loe.opGid }</td>
+                        					<td>${loe.opName }</td>
+                        					<td>${loe.opDate }</td>
+                        					</tr>
+                        				</c:forEach>
+                        			</tbody>
                         		</table>                        		
                         	</div>
                         	<!-- /.table-responsive -->
                         	
                         	<div>
-                        		<a href="#" class="btn btn-primary" data-toggle="modal" id="edit">Edit</a>
+                        	                        		
                         		<a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirm" id="delete">Delete</a>
-                        		<!-- 2 buttons here -->
-                        		
+                        	                        		
                         		<div class="modal fade" id="confirm" tabindex="-1" role="dialog">
                             		<div class="modal-dialog">
                             			<div class="modal-content">
@@ -137,8 +158,9 @@
     <script src="<c:url value="/resources/bower_components/metisMenu/dist/metisMenu.min.js"/>"></script>
     
     <!-- DataTables JavaScript -->
-    <script src="<c:url value="/resources/bower_components/DataTables/media/js/jquery.dataTables.min.js"/>"></script>
+    <script src="<c:url value="/resources/bower_components/datatables/media/js/jquery.dataTables.min.js"/>"></script>
     <script src="<c:url value="/resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"/>"></script>
+    <script src="<c:url value="/resources/bower_components/datatables-responsive/js/dataTables.responsive.js"/>"></script>
     
     <!-- Custom Theme JavaScript -->
     <script src="<c:url value="/resources/dist/js/sb-admin-2.js"/>"></script>
@@ -146,11 +168,49 @@
     <!-- Initial datatable -->
     <script>
     $(document).ready(function() {
+    	
         $('#dataTables').DataTable({
-                responsive: true
+                responsive: true               
         });
+        
+        // Add a click handler to the rows
+    	$('#dataTables tbody').on('click','tr',function(){
+			if($(this).hasClass('active')){
+				$(this).removeClass('active');
+			}
+			else{
+				$(this).siblings().removeClass('active');
+				$(this).addClass('active');				
+			}				
+		});
+        
+    	//Add a click handler to "delete" trigger
+		$('#delete').click(function(){
+			var oTable = $('#dataTables').dataTable();
+			var aLine = oTable.fnGetData('.active');
+			if(aLine == null){
+				$('#delete').attr("data-target","#noSelected");
+			}else{
+				$('#delete').attr("data-target","#confirm");
+			}
+		});
+    	
+		// Add a click handler to "delete" button
+    	$('#deleteConfirmed').click(function(){
+    		var oTable = $('#dataTables').dataTable();
+    		var aLine = oTable.fnGetData('.active');    		
+			var id = oTable.fnGetData('.active')[0];
+			oTable.api().row('.active').remove().draw(false);        			
+    		$.ajax({
+    			url:"/sparepart/license/"+id,
+    			type:'DELETE'
+    		});			
+		});
+        
+        
     });
     </script>
+    
     
 </body>
 </html>

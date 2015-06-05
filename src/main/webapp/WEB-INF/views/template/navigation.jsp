@@ -47,24 +47,24 @@
                                     		<a href="/sparepart/license?new">Create License</a>
                                     	</li>
                                     	<li>
-                                    		<a href="/sparepart/license/records">Edit License</a>
+                                    		<a href="/sparepart/license/records">Manage License</a>
                                     	</li>
                                     	<li>
-                                    		<a href="#">Apply License</a>
+                                    		<a href="/sparepart/license/assignment">Apply License</a>
                                     	</li>
                                     	<li>
-                                    		<a href="#">Release License</a>
+                                    		<a href="/sparepart/license/assignment/records">Release License</a>
                                     	</li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#">Server Inventory<span class="fa arrow"></span></a>
+                                    <a href="#">Host Inventory<span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                     	<li>
-                                    		<a href="#">Create Server</a>
+                                    		<a href="/sparepart/host?new">Create Host</a>
                                     	</li>
                                     	<li>
-                                    		<a href="#">Manage Server</a>
+                                    		<a href="/sparepart/host/records">Manage Host</a>
                                     	</li>
                                     </ul>
                                 </li>

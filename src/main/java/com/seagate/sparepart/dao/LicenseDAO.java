@@ -1,6 +1,7 @@
 package com.seagate.sparepart.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.seagate.sparepart.domain.LicenseInventoryEntry;
 import com.seagate.sparepart.domain.LicenseOpEntry;
@@ -29,6 +30,10 @@ public interface LicenseDAO {
 	public List<LicenseInventoryEntry> getLicenseInvListAct();
 	
 	public void updLicInvQty(int invId, int ttlQuantity, int sprQuantity, int invStatus);
+	
+	public Map<Integer, String> getLicNameListAct();
+	public List<String> getLicNameList();
+	public Map<Integer,Integer> getLeftNumOfLic();
 
 	
 }

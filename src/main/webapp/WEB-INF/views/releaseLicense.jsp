@@ -23,7 +23,7 @@
 
 	<!-- DataTables Responsive CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/bower_components/datatables-responsive/css/dataTables.responsive.css"/>">
-        
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/dist/css/sb-admin-2.css"/>">
     
@@ -44,7 +44,7 @@
 		<div id="page-wrapper">
 			<div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Manage License</h1>
+                    <h1 class="page-header">Manage License Assignment Records</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -54,40 +54,32 @@
             	<div class="col-lg-12">
             		<div class="panel panel-default">
                         <div class="panel-heading">
-                            These are licenses existed in database. Select to delete.
+                            License Assignment Manage Dashboard
                         </div>
                         <div class="panel-body">
                         	<div class="dataTable_wrapper">
-                        		<table class="table table-striped table-bordered table-hover" width="100%" id="dataTables">
+                        		<table class="table table-striped table-bordered table-hover" id="dataTables">
                         			<thead>
                         				<tr>
-                        					<th>ID</th>
+                        					<th>Assignment ID</th>
                         					<th>License Name</th>
-                        					<th>License Key</th>
-                        					<th>License Type</th>
-                        					<th>From Site</th>
-                        					<th>Quantity</th>
-                        					<th>Total Price</th>
-                        					<th>Expire Date</th>
-                        					<th>Registered By (GID)</th>
-                        					<th>Registered By (Name)</th>
-                        					<th>Register Time</th>
+                        					<th>Hostname</th>
+                        					<th>Occupied Quantity</th>
+                        					<th>Applicant GID</th>                        					
+                        					<th>Applicant Name</th>
+                        					<th>Apply Date</th>                        					
                         				</tr>
                         			</thead>
                         			<tbody>
-                        				<c:forEach var="loe" items="${loeList}">
+                        				<c:forEach var="asn" items="${asnList}">
                         					<tr>
-                        					<td>${loe.invOpId }</td>
-                        					<td>${loe.licenseName }</td>
-                        					<td>${loe.licenseKey }</td>
-                        					<td>${loe.licenseType }</td>
-                        					<td>${loe.fromSite }</td>
-                        					<td>${loe.quantity }</td>
-                        					<td>${loe.totalPrice }</td>
-                        					<td>${loe.expireDate }</td>
-                        					<td>${loe.opGid }</td>
-                        					<td>${loe.opName }</td>
-                        					<td>${loe.opDate }</td>
+                        					<td>${asn.asnId }</td>
+                        					<td>${asn.licenseName }</td>
+                        					<td>${asn.hostname }</td>
+                        					<td>${asn.quantity }</td>
+                        					<td>${asn.applicantGid }</td>
+                        					<td>${asn.applicantName }</td>
+                        					<td>${asn.applyDate }</td>
                         					</tr>
                         				</c:forEach>
                         			</tbody>
@@ -97,7 +89,7 @@
                         	
                         	<div>
                         	                        		
-                        		<a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirm" id="delete">Delete</a>
+                        		<a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirm" id="preRelease">Release</a>
                         	                        		
                         		<div class="modal fade" id="confirm" tabindex="-1" role="dialog">
                             		<div class="modal-dialog">
@@ -107,11 +99,11 @@
 	                            				<h3 class="modal-title" id="myModalLabel" style="color:#428bca">Confirmation!</h3>
 	                            			</div>
 	                            			<div class="modal-body">
-	                            				<h4>Are you sure to delete?</h4>
+	                            				<h4>Confirm you want to release these licenses?</h4>
 	                            			</div>
 	                            			<div class="modal-footer">
 		                            			<button class="btn btn-default" data-dismiss="modal">Close</button>
-		                            			<button class="btn btn-primary" id="deleteConfirmed" data-dismiss="modal">Yes!</button>
+		                            			<button class="btn btn-primary" id="releaseConfirmed" data-dismiss="modal">Yes!</button>
 	                            			</div>
                             			</div>
 	                            	</div>	                            	
@@ -161,7 +153,7 @@
     <script src="<c:url value="/resources/bower_components/datatables/media/js/jquery.dataTables.min.js"/>"></script>
     <script src="<c:url value="/resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"/>"></script>
     <script src="<c:url value="/resources/bower_components/datatables-responsive/js/dataTables.responsive.js"/>"></script>
-    
+        
     <!-- Custom Theme JavaScript -->
     <script src="<c:url value="/resources/dist/js/sb-admin-2.js"/>"></script>
     
@@ -185,24 +177,24 @@
 		});
         
     	//Add a click handler to "delete" trigger
-		$('#delete').click(function(){
+		$('#preRelease').click(function(){
 			var oTable = $('#dataTables').dataTable();
 			var aLine = oTable.fnGetData('.active');
 			if(aLine == null){
-				$('#delete').attr("data-target","#noSelected");
+				$('#preRelease').attr("data-target","#noSelected");
 			}else{
-				$('#delete').attr("data-target","#confirm");
+				$('#preRelease').attr("data-target","#confirm");
 			}
 		});
     	
 		// Add a click handler to "delete" button
-    	$('#deleteConfirmed').click(function(){
+    	$('#releaseConfirmed').click(function(){
     		var oTable = $('#dataTables').dataTable();
     		var aLine = oTable.fnGetData('.active');    		
 			var id = oTable.fnGetData('.active')[0];
 			oTable.api().row('.active').remove().draw(false);        			
     		$.ajax({
-    			url:"/sparepart/license/"+id,
+    			url:"/sparepart/license/assignment/"+id,
     			type:'DELETE'
     		});			
 		});
@@ -210,7 +202,6 @@
         
     });
     </script>
-    
     
 </body>
 </html>

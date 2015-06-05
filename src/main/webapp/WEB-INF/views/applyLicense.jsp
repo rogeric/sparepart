@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,8 +18,11 @@
     <!-- MetisMenu CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/bower_components/metisMenu/dist/metisMenu.min.css"/>">
 
-    <!-- Timeline CSS -->
-    <link rel="stylesheet" href="<c:url value="/resources/dist/css/timeline.css"/>">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="<c:url value="/resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"/>" >
+
+	<!-- DataTables Responsive CSS -->
+    <link rel="stylesheet" href="<c:url value="/resources/bower_components/datatables-responsive/css/dataTables.responsive.css"/>">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/dist/css/sb-admin-2.css"/>">
@@ -51,41 +54,33 @@
             	<div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Choose the license you want to apply
+                            Apply licenses for host
                         </div>
                         <div class="panel-body">
-                        	<form role="form">
+                        	<sf:form modelAttribute="asn">
                         		<div class="col-lg-6">
                         			<div class="form-group">
-                        				<label>License Name:</label>
-                        				<select name="licName" id="sltName" class="form-control">
-		                        				<option>1</option>
-		                        				<option>1</option>
-		                        				<option>1</option>
-		                        				<option>1</option>
-	                        			</select>
-	                        			<p class="form-control-static">NUMBER license(s) left.</p>
+                        				<label>License Name:</label>                        			
+	                        			<sf:select path="invId" class="form-control">
+	                        				<option value="" disabled selected style='display:none;'>Select your option</option>
+	                        				<sf:options items="${licNameList }"></sf:options>
+	                        			</sf:select>
+	                        			<p class="form-control-static" id="leftNum">NUMBER license(s) left.</p>
                         			</div>
                         			<div class="form-group">
                         				<label>Host Name:</label>
-                        				<select name="licName" id="sltName" class="form-control">
-		                        				<option>1</option>
-		                        				<option>1</option>
-		                        				<option>1</option>
-		                        				<option>1</option>
-	                        			</select>
+                        				<sf:select path="hostId" class="form-control" >
+                        					<option value="" disabled selected style='display:none;'>Select your option</option>                        					
+		                        			<sf:options items="${hostnameList }"></sf:options>
+	                        			</sf:select>
                         			</div>
                         			<div class="form-group">
-                        				<h3>Apply Number:</h3>
-                        				<div class="form-group input-group" style="width: 150px;">
-											<span class="input-group-addon btn" id="minus">-</span>
-											<input type="text" class="form-control text-center" value=1 name="num" id="num">
-	                                		<span class="input-group-addon btn" id="plus">+</span>
-										</div>
+                        				<h3>Apply Number:</h3>                        				
+                        				<sf:input path="quantity" type="number" class="form-control text-center" min="1" required="true"/>                        				                        
                         			</div>
                         			<button type="submit" class="btn btn-primary">Confirm</button>
                         		</div>
-                        	</form>
+                        	</sf:form>
                         </div>
 					</div>
 				</div>
@@ -103,8 +98,30 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="<c:url value="/resources/bower_components/metisMenu/dist/metisMenu.min.js"/>"></script>
     
+    <!-- DataTables JavaScript -->
+    <script src="<c:url value="/resources/bower_components/datatables/media/js/jquery.dataTables.min.js"/>"></script>
+    <script src="<c:url value="/resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"/>"></script>
+    <script src="<c:url value="/resources/bower_components/datatables-responsive/js/dataTables.responsive.js"/>"></script>
+    
     <!-- Custom Theme JavaScript -->
     <script src="<c:url value="/resources/dist/js/sb-admin-2.js"/>"></script>
+    
+    <script>
+    	$(document).ready(function() {
+    		var map = {
+    			<c:forEach items="${leftNum}" var="item" varStatus="loop">
+    				'${item.key}': '${item.value}' ${not loop.last ? ',':''}
+    			</c:forEach>
+    		};
+    		
+    		$('#invId').change(function(){
+    			var index = $(this).children(":selected").val();
+    			var left = map[index];
+    			$('#leftNum').html("<font color='#d9534f'><strong>" + left+ "</strong></font>" +" license(s) left.");
+    			$('#quantity').attr('max',left);
+    		});
+    	});
+    </script>
     
 </body>
 </html>

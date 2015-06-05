@@ -38,7 +38,7 @@
 </head>
 <body>
 	<div id="wrapper">
-		<jsp:include page="./template/navigation.jsp"></jsp:include>
+		<jsp:include page="../views/template/navigation.jsp"></jsp:include>
 		
 		<div id="page-wrapper">
             <div class="row">

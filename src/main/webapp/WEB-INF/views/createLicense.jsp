@@ -63,11 +63,19 @@
 		                        	<div class="col-lg-6">
 		                        		<div class="form-group">
 		                        			<label>License Name:</label>		                        			
-		                        			<sf:input path="licenseName" type="text" id="txtName" class="form-control" placeholder="Enter license name here." required="true"/>	                        			
+		                        			
+		                        			<sf:select path="licenseName" class="form-control">
+		                        				<option value="" selected disabled style='display:none;'>Select license you want to apply</option>
+	                        					<option value="">Create a new license name</option>
+	                        					<sf:options items="${licenseNameList }"></sf:options>	                        					
+		                        			</sf:select>
+		                        			<p id="newName" class="help-block" style="display: none;">Type a new name here:</p>
+		                        			<input id="txtLicName" class="form-control" type="hidden"/>
+		                        				                        			
 		                        		</div>
 		                        		<div class="form-group">
 		                        			<label for="licKey">License Key:</label>
-		                        			<sf:input path="licenseKey" id="licKey" type="text" class="form-control"/>	                        			
+		                        			<sf:input path="licenseKey" type="text" class="form-control"/>	                        			
 		                        		</div>
 		                        		<div class="form-group">
 		                        			<label for="licType">License Type:</label>
@@ -85,9 +93,10 @@
 		                        		<div class="form-group">
 		                        			<label for="licSite">From Site:</label>
 		                        			<sf:select path="fromSite" class="form-control">
-		                        				<sf:option value="Wuxi" />
+		                        				<option value="" disabled selected style='display:none;'>Select your option</option>
+		                        				<sf:option value="Wuxi" required="true"/>
 		                        				<sf:option value="Suzhou" />
-		                        				<sf:option value="..." />
+		                        				
 		                        			</sf:select>	                        			
 		                        		</div>
 		                        		<div class="form-group">
@@ -154,6 +163,17 @@
 	        jQuery('#expDate').datetimepicker({
 	        	format:'YYYY-MM-DD'	
 	    	});
+	        $('#licenseName').change(function(){
+	        	if($(this).val() == ""){
+	        		$("#txtLicName").attr('name','licenseName').attr('type',"text");	        		
+	        		$("#licenseName").removeAttr("name");
+	        		$('#newName').removeAttr('style');
+	        	}else{
+	        		$("#txtLicName").removeAttr('name').attr('type','hidden');
+	        		$("#licenseName").attr('name','licenseName');
+	        		$('#newName').attr('style','display: none;');
+	        	}
+	        });
 	    });
     </script>
     

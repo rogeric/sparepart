@@ -23,7 +23,7 @@
 
 	<!-- DataTables Responsive CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/bower_components/datatables-responsive/css/dataTables.responsive.css"/>">
-        
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/dist/css/sb-admin-2.css"/>">
     
@@ -44,7 +44,7 @@
 		<div id="page-wrapper">
 			<div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Manage License</h1>
+                    <h1 class="page-header">Manage Host</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -52,94 +52,83 @@
             
             <div class="row">
             	<div class="col-lg-12">
-            		<div class="panel panel-default">
-                        <div class="panel-heading">
-                            These are licenses existed in database. Select to delete.
-                        </div>
-                        <div class="panel-body">
-                        	<div class="dataTable_wrapper">
-                        		<table class="table table-striped table-bordered table-hover" width="100%" id="dataTables">
+                        		<table class="table table-striped table-bordered table-hover dt-responsive display nowrap" cellspacing="0" width="100%" id="dataTables">
                         			<thead>
                         				<tr>
-                        					<th>ID</th>
-                        					<th>License Name</th>
-                        					<th>License Key</th>
-                        					<th>License Type</th>
-                        					<th>From Site</th>
-                        					<th>Quantity</th>
-                        					<th>Total Price</th>
-                        					<th>Expire Date</th>
-                        					<th>Registered By (GID)</th>
-                        					<th>Registered By (Name)</th>
-                        					<th>Register Time</th>
+                        					<th>OP ID</th>
+                        					<th>Hostname</th>
+                        					<th>Host Type</th>
+                        					<th>Serial Number</th>
+                        					<th>Number of CPU</th>                        					
+                        					<th>IP Address</th>
+                        					<th>Location</th>
+                        					<th>Owner GID</th>
+                        					<th>Owner Name</th>
+                        					<th>Creation Date</th>
                         				</tr>
                         			</thead>
                         			<tbody>
-                        				<c:forEach var="loe" items="${loeList}">
+                        				<c:forEach var="hoe" items="${hoeList}">
                         					<tr>
-                        					<td>${loe.invOpId }</td>
-                        					<td>${loe.licenseName }</td>
-                        					<td>${loe.licenseKey }</td>
-                        					<td>${loe.licenseType }</td>
-                        					<td>${loe.fromSite }</td>
-                        					<td>${loe.quantity }</td>
-                        					<td>${loe.totalPrice }</td>
-                        					<td>${loe.expireDate }</td>
-                        					<td>${loe.opGid }</td>
-                        					<td>${loe.opName }</td>
-                        					<td>${loe.opDate }</td>
+                        					<td>${hoe.hostOpId }</td>
+                        					<td>${hoe.hostname }</td>
+                        					<td>${hoe.hostType }</td>
+                        					<td>${hoe.serialNumber }</td>
+                        					<td>${hoe.noOfCpu }</td>
+                        					<td>${hoe.ip }</td>
+                        					<td>${hoe.location }</td>
+                        					<td>${hoe.ownerGid }</td>
+                        					<td>${hoe.ownerName }</td>
+                        					<td>${hoe.opDate }</td>
                         					</tr>
                         				</c:forEach>
                         			</tbody>
                         		</table>                        		
-                        	</div>
-                        	<!-- /.table-responsive -->
                         	
-                        	<div>
-                        	                        		
-                        		<a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirm" id="delete">Delete</a>
-                        	                        		
-                        		<div class="modal fade" id="confirm" tabindex="-1" role="dialog">
-                            		<div class="modal-dialog">
-                            			<div class="modal-content">
-	                            			<div class="modal-header">
-	                            				<button type="button" class="close" data-dismiss="modal">&times;</button>
-	                            				<h3 class="modal-title" id="myModalLabel" style="color:#428bca">Confirmation!</h3>
+                        		<!-- /.table-responsive -->
+                        	
+	                        	<div>
+	                        	                        		
+	                        		<a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirm" id="delete">Delete</a>
+	                        	                        		
+	                        		<div class="modal fade" id="confirm" tabindex="-1" role="dialog">
+	                            		<div class="modal-dialog">
+	                            			<div class="modal-content">
+		                            			<div class="modal-header">
+		                            				<button type="button" class="close" data-dismiss="modal">&times;</button>
+		                            				<h3 class="modal-title" id="myModalLabel" style="color:#428bca">Confirmation!</h3>
+		                            			</div>
+		                            			<div class="modal-body">
+		                            				<h4>Delete a host will release related licenses, are you sure to delete?</h4>
+		                            			</div>
+		                            			<div class="modal-footer">
+			                            			<button class="btn btn-default" data-dismiss="modal">Close</button>
+			                            			<button class="btn btn-primary" id="deleteConfirmed" data-dismiss="modal">Yes!</button>
+		                            			</div>
 	                            			</div>
-	                            			<div class="modal-body">
-	                            				<h4>Are you sure to delete?</h4>
-	                            			</div>
-	                            			<div class="modal-footer">
-		                            			<button class="btn btn-default" data-dismiss="modal">Close</button>
-		                            			<button class="btn btn-primary" id="deleteConfirmed" data-dismiss="modal">Yes!</button>
-	                            			</div>
-                            			</div>
-	                            	</div>	                            	
-                            	</div>
-                            	<!-- modal-dialog for delete confirm -->
-                            	
-                            	<div class="modal fade" id="noSelected" tabindex="-1" role="dialog">
-	                            	<div class="modal-dialog">
-	                            		<div class="modal-content">
-	                            			<div class="modal-header">
-	                            				<button type="button" class="close" data-dismiss="modal">&times;</button>
-	                            				<h3 class="modal-title" id="myModalLabel" style="color:#d9534f">Warning!</h3>
-	                            			</div>
-	                            			<div class="modal-body">
-	                            				<h4>Please select at least one row!</h4>
-	                            			</div>
-	                            			<div class="modal-footer">
-	                            				<button class="btn btn-primary" data-dismiss="modal">OK!</button>
-	                            			</div>
+		                            	</div>	                            	
+	                            	</div>
+	                            	<!-- modal-dialog for delete confirm -->
+	                            	
+	                            	<div class="modal fade" id="noSelected" tabindex="-1" role="dialog">
+		                            	<div class="modal-dialog">
+		                            		<div class="modal-content">
+		                            			<div class="modal-header">
+		                            				<button type="button" class="close" data-dismiss="modal">&times;</button>
+		                            				<h3 class="modal-title" id="myModalLabel" style="color:#d9534f">Warning!</h3>
+		                            			</div>
+		                            			<div class="modal-body">
+		                            				<h4>Please select at least one row!</h4>
+		                            			</div>
+		                            			<div class="modal-footer">
+		                            				<button class="btn btn-primary" data-dismiss="modal">OK!</button>
+		                            			</div>
+		                            		</div>
 	                            		</div>
-                            		</div>
-                            	</div>
-                        	</div>
-                        	<!-- /Buttons -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
+	                            	</div>
+	                        	</div>
+	                        	<!-- /Buttons -->
+                	
             	</div>
             	<!-- /.col-lg-12 -->
             </div>
@@ -161,7 +150,7 @@
     <script src="<c:url value="/resources/bower_components/datatables/media/js/jquery.dataTables.min.js"/>"></script>
     <script src="<c:url value="/resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"/>"></script>
     <script src="<c:url value="/resources/bower_components/datatables-responsive/js/dataTables.responsive.js"/>"></script>
-    
+        
     <!-- Custom Theme JavaScript -->
     <script src="<c:url value="/resources/dist/js/sb-admin-2.js"/>"></script>
     
@@ -169,8 +158,8 @@
     <script>
     $(document).ready(function() {
     	
-        $('#dataTables').DataTable({
-                responsive: true               
+        $('#dataTables').dataTable({
+            "responsive": true                     
         });
         
         // Add a click handler to the rows
@@ -202,7 +191,7 @@
 			var id = oTable.fnGetData('.active')[0];
 			oTable.api().row('.active').remove().draw(false);        			
     		$.ajax({
-    			url:"/sparepart/license/"+id,
+    			url:"/sparepart/host/"+id,
     			type:'DELETE'
     		});			
 		});
@@ -210,7 +199,6 @@
         
     });
     </script>
-    
     
 </body>
 </html>

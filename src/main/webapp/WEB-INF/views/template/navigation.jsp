@@ -1,3 +1,4 @@
+        <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -22,7 +23,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="/sparepart/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -36,19 +37,21 @@
                     <ul class="nav" id="side-menu">
                         <li>
                             <a href="#"><i class="fa fa-folder-open fa-fw"></i> License Management<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">                            	
+                            <ul id="home" class="nav nav-second-level">                            	
                                 <li>
                                     <a href="#">License Inventory<span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
+                                    <ul id="license" class="nav nav-third-level">
                                     	<li>
                                     		<a href="#">License Overview</a>
-                                    	</li>	
+                                    	</li>
+                                    	<sec:authorize access="hasRole('ADMIN')">	
                                     	<li>
                                     		<a href="/sparepart/license?new">Create License</a>
                                     	</li>
                                     	<li>
                                     		<a href="/sparepart/license/records">Manage License</a>
                                     	</li>
+                                    	</sec:authorize>
                                     	<li>
                                     		<a href="/sparepart/license/assignment">Apply License</a>
                                     	</li>
@@ -59,7 +62,7 @@
                                 </li>
                                 <li>
                                     <a href="#">Host Inventory<span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
+                                    <ul id="host" class="nav nav-third-level">
                                     	<li>
                                     		<a href="/sparepart/host?new">Create Host</a>
                                     	</li>

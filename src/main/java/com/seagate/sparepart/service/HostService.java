@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.seagate.sparepart.dao.HostDao;
 import com.seagate.sparepart.domain.HostInvEntry;
@@ -23,7 +25,7 @@ public class HostService {
 	}
 	
 	
-	
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public void addHostOp(HostOpEntry hoe){
 //		1. Insert a row in Host inventory
 //		2. Get host_id from the record, set it into host op entry
@@ -52,6 +54,7 @@ public class HostService {
 		dao.addHostOp(hoe);
 	}
 	
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public void delHostOp(int hostOpId){
 //		1. Mark host op row's status to 0
 //		2. Create 1 new row in host op, most of the columns are same as the deleted one, except hostOpId, operator, op_type, op_date, status

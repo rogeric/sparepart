@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.seagate.sparepart.dao.AssignmentDao;
 import com.seagate.sparepart.dao.LicenseDAO;
@@ -27,6 +29,7 @@ public class LicenseService {
 	}
 
 	//Actions on license_operation
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public void addLicenseOpEntry(LicenseOpEntry loe){
 //		1. Create on row in inventory_operation
 //		2. Decide if the license name is exist in DB "inventory"
@@ -74,6 +77,7 @@ public class LicenseService {
 		dao.addLicenseOpEntry(loe);		
 	}
 	
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public void delLicenseOpEntry(int invOpId, int opGid, String opName){
 //		1. Update inv_op_id entry status to "0"
 //		2. Create a new inv_op, which have same value with the deleted one, except inv_op_id, op_type, op_date, status = 0
@@ -134,6 +138,7 @@ public class LicenseService {
 		return dao.getLicNameListAct();
 	}
 
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public void aplyLicense(Assignment assignment){
 		LicenseInventoryEntry lie = dao.getLicenseInv(assignment.getInvId());
 		int leftQuantity = lie.getSpareQuantity() - assignment.getQuantity();
@@ -149,6 +154,7 @@ public class LicenseService {
 		asnDao.createAssignment(assignment);
 	}
 	
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public void rlsLicense(int asnId, int releaserGid, String releaserName){
 		Date dt = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

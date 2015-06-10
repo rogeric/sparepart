@@ -9,7 +9,7 @@
 		<form-login
 		    login-page="/login"
 		    authentication-failure-url="/login?error"
-		    default-target-url="/license?new"/> 
+		    default-target-url="/license/dashboard"/> 
 		
 		<intercept-url pattern="\/login.*" access="permitAll"/>
 		<intercept-url pattern="\/resources\/.*" access="permitAll"/>		

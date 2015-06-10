@@ -71,7 +71,7 @@
                         			<div class="form-group">
                         				<label>Host Name:</label>
                         				<sf:select path="hostId" class="form-control" >
-                        					<option value="" disabled selected style='display:none;'>Select your option</option>                        					
+                        					<option value="" disabled selected style='display:none;' required="true">Select your option</option>                        					
 		                        			<sf:options items="${hostnameList }"></sf:options>
 	                        			</sf:select>
                         			</div>

@@ -187,5 +187,8 @@ public class LicenseService {
 	public List<Integer> getAssignmentsByHost(int hostId){
 		return asnDao.getAssignmentsByHost(hostId);
 	}
-	
+		
+	public List<LicenseInventoryEntry> getExcessedLic(){
+		return dao.getExcessedLic();
+	}
 }

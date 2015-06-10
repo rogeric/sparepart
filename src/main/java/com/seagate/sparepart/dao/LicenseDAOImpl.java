@@ -173,9 +173,16 @@ public class LicenseDAOImpl implements LicenseDAO {
 		}
 		return leftNum;
 	}
+
+
+	private static final String GET_EXCESSED_LIC = "select inv_id as invId, license_name as licenseName, license_Key as licenseKey, license_type as licenseType, total_quantity as totalQuantity, spare_quantity as spareQuantity, inv_status as invStatus from inventory where spare_quantity < 0";
+	@Override
+	public List<LicenseInventoryEntry> getExcessedLic() {
+		List<LicenseInventoryEntry> lieList = jdbcTemplate.query(GET_EXCESSED_LIC, new BeanPropertyRowMapper(LicenseInventoryEntry.class));
+		return lieList;
+	}
 	
-
-
+	
 	
 
 

@@ -8,7 +8,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.jsp">Sparepart Management</a>
+                <a class="navbar-brand" href="/sparepart/license/dashboard">Sparepart Management</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -42,7 +42,7 @@
                                     <a href="#">License Inventory<span class="fa arrow"></span></a>
                                     <ul id="license" class="nav nav-third-level">
                                     	<li>
-                                    		<a href="#">License Overview</a>
+                                    		<a href="/sparepart/license/dashboard">License Overview</a>
                                     	</li>
                                     	<sec:authorize access="hasRole('ADMIN')">	
                                     	<li>

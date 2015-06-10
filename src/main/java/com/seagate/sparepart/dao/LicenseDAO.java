@@ -35,5 +35,6 @@ public interface LicenseDAO {
 	public List<String> getLicNameList();
 	public Map<Integer,Integer> getLeftNumOfLic();
 
+	public List<LicenseInventoryEntry> getExcessedLic();
 	
 }

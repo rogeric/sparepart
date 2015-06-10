@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.seagate.sparepart.domain.Assignment;
 import com.seagate.sparepart.domain.LicenseCreationForm;
+import com.seagate.sparepart.domain.LicenseInventoryEntry;
 import com.seagate.sparepart.domain.LicenseOpEntry;
 import com.seagate.sparepart.ldap.LoginInfo;
 import com.seagate.sparepart.service.HostService;
@@ -117,6 +118,23 @@ public class LicenseController {
 		LoginInfo loginInfo = (LoginInfo) auth.getDetails();
 		
 		licenseService.rlsLicense(asnId, Integer.parseInt(loginInfo.getUid()), loginInfo.getName());
+	}
+	
+	@RequestMapping("/dashboard")
+	public String showDashboard(Model model){
+		List<LicenseInventoryEntry> lieList = licenseService.getLicenseInvList();
+		String chartData = "";
+		for(LicenseInventoryEntry lie : lieList){
+			int occupied = lie.getTotalQuantity() - lie.getSpareQuantity();
+			chartData += "{name:'" + lie.getLicenseName() + "', available:" + lie.getSpareQuantity() + ", occupied:" + occupied + "},";
+		}
+		if(chartData.length() > 0){
+			chartData = chartData.substring(0,chartData.length() - 1);
+		}
+		model.addAttribute("data", chartData);
+		List<LicenseInventoryEntry> excessedLieList = licenseService.getExcessedLic();
+		model.addAttribute("lieList", excessedLieList);
+		return "dashboard";
 	}
 
 }

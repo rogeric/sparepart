@@ -26,6 +26,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/dist/css/sb-admin-2.css"/>">
     
+    <!-- formValidation CSS -->
+    <link rel="stylesheet" href="<c:url value="/resources/bower_components/formValidation/css/formValidation.min.css"/>">
+    
     <!-- Custom Fonts -->
     <link rel="stylesheet" href="<c:url value="/resources/bower_components/font-awesome/css/font-awesome.min.css"/>" type="text/css">
 
@@ -56,12 +59,12 @@
                             Input Host Information
                         </div>
                         <div class="panel-body">
-	                        <sf:form method="POST" modelAttribute="hoe">	
+	                        <sf:form method="POST" modelAttribute="hoe" id="createHostForm">	
 	                        	<div class="row">
 		                        	<div class="col-lg-6">
 		                        		<div class="form-group">
 		                        			<label>Host Name:</label>		                        			
-		                        			<sf:input path="hostname" class="form-control" placeholder="Enter host name here." required="true"/>	                        			
+		                        			<sf:input path="hostname" class="form-control" placeholder="Enter host name here." />	                        			
 		                        		</div>
 		                        		<div class="form-group">
 		                        			<label>Host Type:</label>
@@ -123,9 +126,48 @@
     <!-- Custom Theme JavaScript -->
     <script src="<c:url value="/resources/dist/js/sb-admin-2.js"/>"></script>
     
+    <!-- formValidation JavaScript -->
+    <script src="<c:url value="/resources/bower_components/formValidation/js/formValidation.min.js"/>"></script>
+    <script src="<c:url value="/resources/bower_components/formValidation/js/framework/bootstrap.min.js"/>"></script>
+    
     <script>
     	$(document).ready(function(){
     		$('#home,#host').addClass('in');
+    		
+    		$('#createHostForm').formValidation({
+    			framework: 'bootstrap',
+    			icon: {
+    				valid: 'glyphicon glyphicon-ok',
+    				invalid: 'glyphicon glyphicon-remove',
+    				validating: 'glyphicon glyphicon-refresh'
+    			},
+    			fields: {
+    				hostname: {
+    					validators: {    						
+    						notEmpty: {
+    							message: 'The Host Name is required and cannot be empty'
+    						}
+    					}
+    				},
+	    			hostType: {
+	    				validators: {    						
+    						notEmpty: {
+    							message: 'The Host Type is required and cannot be empty'
+    						}
+    					}
+	    			},
+	    			ip: {
+	    				validators: {    						
+    						notEmpty: {
+    							message: 'The IP address is required and cannot be empty'
+    						},
+    						ip: {
+    	                        message: 'Please enter a valid IP address'
+    	                    }
+    					}
+	    			}
+    			}
+    		});
     	})
     </script>
 </body>

@@ -28,9 +28,12 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/dist/css/sb-admin-2.css"/>">
     
+    <!-- formValidation CSS -->
+    <link rel="stylesheet" href="<c:url value="/resources/bower_components/formValidation/css/formValidation.min.css"/>">
+    
     <!-- Custom Fonts -->
     <link rel="stylesheet" href="<c:url value="/resources/bower_components/font-awesome/css/font-awesome.min.css"/>" type="text/css">
-
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -58,7 +61,7 @@
                             Apply licenses for host
                         </div>
                         <div class="panel-body">
-                        	<sf:form modelAttribute="asn">
+                        	<sf:form id="asnForm" modelAttribute="asn">
                         		<div class="col-lg-6">
                         			<div class="form-group">
                         				<label>License Name:</label>                        			
@@ -66,18 +69,19 @@
 	                        				<option value="" disabled selected style='display:none;'>Select your option</option>
 	                        				<sf:options items="${licNameList }"></sf:options>
 	                        			</sf:select>
+	                        			<span class="help-block" id="errorMsg"></span>
 	                        			<p class="form-control-static" id="leftNum">NUMBER license(s) left.</p>
                         			</div>
                         			<div class="form-group">
                         				<label>Host Name:</label>
                         				<sf:select path="hostId" class="form-control" >
-                        					<option value="" disabled selected style='display:none;' required="true">Select your option</option>                        					
+                        					<option value="" disabled selected style='display:none;'>Select your option</option>                        					
 		                        			<sf:options items="${hostnameList }"></sf:options>
 	                        			</sf:select>
                         			</div>
                         			<div class="form-group">
-                        				<h3>Apply Number:</h3>                        				
-                        				<sf:input path="quantity" type="number" class="form-control text-center" min="1" required="true"/>                        				                        
+                        				<label>Apply Number:</label>                        				
+                        				<sf:input path="quantity" type="number" class="form-control text-center" min="1"/>                        				                        
                         			</div>
                         			<button type="submit" class="btn btn-primary">Confirm</button>
                         		</div>
@@ -107,6 +111,10 @@
     <!-- Custom Theme JavaScript -->
     <script src="<c:url value="/resources/dist/js/sb-admin-2.js"/>"></script>
     
+    <!-- formValidation JavaScript -->
+    <script src="<c:url value="/resources/bower_components/formValidation/js/formValidation.min.js"/>"></script>
+    <script src="<c:url value="/resources/bower_components/formValidation/js/framework/bootstrap.min.js"/>"></script>
+    
     <script>
     	$(document).ready(function() {
     		var map = {
@@ -125,6 +133,42 @@
     		});
     		
     		$('#home,#license').addClass('in');
+    		
+    		$("#asnForm").formValidation({
+    			framework: 'bootstrap',
+    			icon: {
+    				valid: 'glyphicon glyphicon-ok',
+    				invalid: 'glyphicon glyphicon-remove',
+    				validating: 'glyphicon glyphicon-refresh'
+    			},
+    			fields: {
+    				invId:{
+    					err: "#errorMsg",
+    					validators: {    						
+    						notEmpty: {
+    							message: 'The License Name is required and cannot be empty'
+    						}
+    					}
+    				},
+    				hostId:{
+    					validators: {
+    						notEmpty: {
+    							message: 'The Host Name is required and cannot be empty'
+    						}
+    					}
+    				},
+    				quantity:{
+    					validators: {
+    						notEmpty: {
+    	                        message: 'The quantity is required'
+    	                    },
+    	                    numeric: {
+    	                        message: 'The quantity must be a number'
+    	                    }
+    					}
+    				}
+    			}
+    		});
     	});
     </script>
     

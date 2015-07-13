@@ -120,7 +120,7 @@ public class LicenseController {
 		licenseService.rlsLicense(asnId, Integer.parseInt(loginInfo.getUid()), loginInfo.getName());
 	}
 	
-	@RequestMapping("/dashboard")
+	@RequestMapping(value={"/dashboard","","/"})
 	public String showDashboard(Model model){
 		List<LicenseInventoryEntry> lieList = licenseService.getLicenseInvList();
 		String chartData = "";

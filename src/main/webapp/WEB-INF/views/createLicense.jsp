@@ -26,6 +26,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<c:url value="/resources/dist/css/sb-admin-2.css"/>">
     
+    <!-- formValidation CSS -->
+    <link rel="stylesheet" href="<c:url value="/resources/bower_components/formValidation/css/formValidation.min.css"/>">
+    
     <!-- Custom Fonts -->
     <link rel="stylesheet" href="<c:url value="/resources/bower_components/font-awesome/css/font-awesome.min.css"/>" type="text/css">
     
@@ -59,7 +62,7 @@
                             Input License Information
                         </div>
                         <div class="panel-body">
-	                        <sf:form method="POST" modelAttribute="licenseCreationForm">	
+	                        <sf:form method="POST" modelAttribute="licenseCreationForm" id="createLicenseForm">	
 	                        	<div class="row">
 		                        	<div class="col-lg-6">
 		                        		<div class="form-group">
@@ -67,7 +70,7 @@
 		                        			
 		                        			<sf:select path="licenseName" class="form-control">
 		                        				<option value="" selected disabled style='display:none;'>Select license you want to apply</option>
-	                        					<option value="">Create a new license name</option>
+	                        					<option value="" >Create a new license name</option>
 	                        					<sf:options items="${licenseNameList }"></sf:options>	                        					
 		                        			</sf:select>
 		                        			<p id="newName" class="help-block" style="display: none;">Type a new name here:</p>
@@ -95,7 +98,7 @@
 		                        			<label for="licSite">From Site:</label>
 		                        			<sf:select path="fromSite" class="form-control">
 		                        				<option value="" disabled selected style='display:none;'>Select your option</option>
-		                        				<sf:option value="Wuxi" required="true"/>
+		                        				<sf:option value="Wuxi"/>
 		                        				<sf:option value="Suzhou" />
 		                        				
 		                        			</sf:select>	                        			
@@ -157,6 +160,10 @@
     
     <!-- Custom Theme JavaScript -->
     <script src="<c:url value="/resources/dist/js/sb-admin-2.js"/>"></script>
+    
+    <!-- formValidation JavaScript -->
+    <script src="<c:url value="/resources/bower_components/formValidation/js/formValidation.min.js"/>"></script>
+    <script src="<c:url value="/resources/bower_components/formValidation/js/framework/bootstrap.min.js"/>"></script>
         
     <!-- Initial Datetimepicker -->
     <script type="text/javascript">
@@ -177,6 +184,32 @@
 	        });
 	        
 	        $('#home,#license').addClass('in');
+	        
+	        $('#createLicenseForm').formValidation({
+	        	framework: 'bootstrap',
+    			icon: {
+    				valid: 'glyphicon glyphicon-ok',
+    				invalid: 'glyphicon glyphicon-remove',
+    				validating: 'glyphicon glyphicon-refresh'
+    			},
+    			fields: {
+    				fromSite:{
+    					validators:{
+    						notEmpty: {
+    							message: 'The Site is required and cannot be empty'
+    						}
+    					}
+    				},
+    				license:{
+    					selector: '#txtLicName',
+    					validators:{
+    						notEmpty: {
+    							message: 'The License Name is required and cannot be empty'
+    						}
+    					}
+    				}
+    			}
+	        });
 	    });
     </script>
     

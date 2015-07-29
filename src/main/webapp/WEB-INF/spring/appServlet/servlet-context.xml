@@ -23,7 +23,5 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.seagate.sparepart.controller" />
-	
-	
-	
+
 </beans:beans>

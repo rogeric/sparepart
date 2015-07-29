@@ -72,7 +72,16 @@
                                     </ul>
                                 </li>
                             </ul>
-                            <!-- /.nav- License Management -->
+                            <!-- /.nav- License Management -->                            
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-folder-open fa-fw"></i> Contract Management<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">                            	
+                                <li>
+                                    <a href="/sparepart/contract?new">Create Contract</a>
+                                </li>                                
+                            </ul>
+                            <!-- /.nav- License Management -->                            
                         </li>
                     </ul>
                 </div>
